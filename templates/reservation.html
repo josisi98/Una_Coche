@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block contentA %}
+<form class="row g-3 needs-validation" novalidate>
+    <div class="col-md-6">
+        <label for="full_name" class="form-label">Nom complet</label>
+        <input type="text" class="form-control" id="full_name" required>
+        <div class="invalid-feedback">
+            Veuillez fournir un nom complet.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" required>
+        <div class="invalid-feedback">
+            Veuillez fournir une adresse email valide.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="phone_number" class="form-label">Numéro de téléphone</label>
+        <input type="tel" class="form-control" id="phone_number" required>
+        <div class="invalid-feedback">
+            Veuillez fournir un numéro de téléphone.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="check_in" class="form-label">Date d'arrivée</label>
+        <input type="date" class="form-control" id="check_in" required>
+        <div class="invalid-feedback">
+            Veuillez fournir une date d'arrivée valide.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="check_out" class="form-label">Date de départ</label>
+        <input type="date" class="form-control" id="check_out" required>
+        <div class="invalid-feedback">
+            Veuillez fournir une date de départ valide.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="num_guests" class="form-label">Nombre de clients</label>
+        <input type="number" class="form-control" id="num_guests" required>
+        <div class="invalid-feedback">
+            Veuillez fournir le nombre de clients.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="vehicle_choice" class="form-label">Véhicule</label>
+        <select class="form-select" id="vehicle_choice" required>
+            <option value="" selected disabled>Choisir...</option>
+            <option value="car">Voiture</option>
+            <option value="suv">SUV</option>
+            <option value="van">Fourgonnette</option>
+        </select>
+        <div class="invalid-feedback">
+            Veuillez choisir un véhicule.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="driver_choice" class="form-label">Chauffeur</label>
+        <select class="form-select" id="driver_choice" required>
+            <option value="" selected disabled>Choisir...</option>
+            <option value="yes">Oui</option>
+            <option value="no">Non</option>
+        </select>
+        <div class="invalid-feedback">
+            Veuillez choisir une option pour le chauffeur.
+        </div>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Effectuer la réservation</button>
+    </div>
+</form>
+{% endblock contentA %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block contentA %}
+<div class="container w-50">
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Join Today</legend>
+      <div class="form-group">
+        {{ form.Nom.label(class="form-control-label") }}
+        {% if form.Nom.errors %}
+          {{ form.Nom(class="form-control form-control-lg is-invalid") }}
+          {% for error in form.Nom.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.Nom(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.prenom.label(class="form-control-label") }}
+        {% if form.prenom.errors %}
+          {{ form.prenom(class="form-control form-control-lg is-invalid") }}
+          {% for error in form.prenom.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.prenom(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.Nom_utilisateur.label(class="form-control-label") }}
+        {% if form.Nom_utilisateur.errors %}
+          {{ form.Nom_utilisateur(class="form-control form-control-lg is-invalid") }}
+          {% for error in form.Nom_utilisateur.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.Nom_utilisateur(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.email.label(class="form-control-label") }}
+        {% if form.email.errors %}
+          {{ form.email(class="form-control form-control-lg is-invalid") }}
+          {% for error in form.email.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.email(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.mot_de_passe.label(class="form-control-label") }}
+        {% if form.mot_de_passe.errors %}
+          {{ form.mot_de_passe(class="form-control form-control-lg is-invalid") }}
+          {% for error in form.mot_de_passe.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.mot_de_passe(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.confir_motdepasse.label(class="form-control-label") }}
+        {% if form.confir_motdepasse.errors %}
+          {{ form.confir_motdepasse(class="form-control form-control-lg is-invalid") }}
+          {% for error in form.confir_motdepasse.errors %}
+            <span>{{ error }}</span>
+          {% endfor %}
+        {% else %}
+          {{ form.confir_motdepasse(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+    </fieldset>
+    <div class="field-group">
+      {{ form.submit(class="btn btn-primary") }}
+    </div>
+  </form>
+</div>
+{% endblock contentA %}

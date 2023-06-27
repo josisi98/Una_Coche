@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{url_for('accueil')}}">UNA_COCHE</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav justify-content-center"> <!-- Modifier cette ligne -->
+        {%if current_user.is_authenticated%}
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{{url_for('accueil')}}">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('apropos')}}">A propos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('véhicule')}}">Véhicule</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Services
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="#"></a>Coursses rapide</li>
+            <li><a class="dropdown-item" href="#"></a>Cours trajet</li>
+            <li><a class="dropdown-item" href="#">Long trajet</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('services')}}">Pofile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('reservation')}}">Reservation</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{{url_for('accueil')}}">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('apropos')}}">A propos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('services')}}">Services</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  <div class="inscrip">
+    <ul class="navbar-nav justify-content-end">
+      {%if current_user.is_authenticated%}
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('deconnexion')}}">Deconnexion</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{{url_for('inscription')}}">Inscription</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('connexion')}}">Connexion</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
