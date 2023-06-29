@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block contentA %}
+<body class="bod">
+  
+<div class="top2">
+    <div class="top-1">
+    <h1>Nos Véhicules</h1>
+    <p class="aprop">
+        <strong>"Notre flotte de véhicule avec chauffeur"</strong>
+    </p>
+    <p class="sta">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </p>
+    </div>
+</div>
+{% for vehicule in vehicules %}
+  <div class="card">
+    <img src="{{ vehicule.image }}" class="card-img-top" alt="Image du véhicule">
+    <div class="card-body">
+      <h5 class="card-title">{{ vehicule.marque }} - {{ vehicule.modele }}</h5>
+      <p class="card-text">{{ vehicule.description }}</p>
+      <a href="#" class="btn btn-primary">Réserver</a>
+    </div>
+  </div>
+{% endfor %}
+
+  
+
+</body>
+
+{% endblock contentA %}

@@ -1,21 +1,22 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import LoginManager,UserMixin,current_user,login_user,logout_user,login_required
-from forms import RegistrationForm, LoginForm ,ReservationForm
+from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user, login_required
 from flask_bcrypt import Bcrypt
-
-
-
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from forms import RegistrationForm, LoginForm, ReservationForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'lavieestainsi'
-bcrypt=Bcrypt(app)
+bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///UNA_COCHE.db'
 
 db = SQLAlchemy(app)
+admin = Admin(app, name='josias_dmin', template_mode='bootstrap3')
+
 
 # pour la session#
 
@@ -28,7 +29,9 @@ def load_user(user_id):
 def unauthorized():
     return redirect(url_for('inscription'))
 
-class Utilisateur(db.Model,UserMixin):
+
+# Modèle Utilisateur
+class Utilisateur(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     Nom = db.Column(db.String(40), nullable=False)
     prenom = db.Column(db.String(60), nullable=False)
@@ -36,7 +39,8 @@ class Utilisateur(db.Model,UserMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
     mot_de_passe = db.Column(db.String(100), nullable=False)
     date_creation = db.Column(db.DateTime, default=datetime.utcnow)
-    
+    is_admin = db.Column(db.Boolean, default=False)
+
     def __repr__(self):
         return f'Utilisateur:{self.Nom} : {self.prenom} : {self.Nom_utilisateur} Email: {self.email} : {self.mot_de_passe} : {self.date_creation.strftime("%d/%m/%Y,%H:%M:%S")}'
     
@@ -44,45 +48,44 @@ class Vehicule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     marque = db.Column(db.String(100), nullable=False)
     modele = db.Column(db.String(100), nullable=False)
-    annee = db.Column(db.Integer, nullable=False)
-    disponibilite = db.Column(db.Boolean, default=True)
-    reservations = db.relationship('Reservation', backref='vehicule', lazy=True)
+    annee = db.Column(db.String(4), nullable=True)
+    description = db.Column(db.Text, nullable=False)
+    # image = db.Column(db.ImageField, nullable=False)
 
     def __repr__(self):
-        return f'{self.marque} {self.modele} ({self.annee})'
+        return f'Vehicule(id={self.id}, marque={self.marque}, modele={self.modele}'
+class ProfileChauffeur(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(100), nullable=False)
+    prenom = db.Column(db.String(100), nullable=False)
+    adresse = db.Column(db.String(200), nullable=False)
+    numero_telephone = db.Column(db.String(20), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image = db.Column(db.String(100), nullable=False)
 
+    def __repr__(self):
+        return f'ProfileChauffeur(id={self.id}, nom={self.nom}, prenom={self.prenom})'
+
+
+
+admin.add_view(ModelView(Utilisateur, db.session))
+admin.add_view(ModelView(Vehicule, db.session)) 
+# admin.add_view(ModelView(Reservation, db.session))
+admin.add_view(ModelView(ProfileChauffeur, db.session))
+# admin.add_view(ModelView(Facture, db.session))
+
+
+# Modèle Réservation
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    utilisateur_id = db.Column(db.Integer, db.ForeignKey('utilisateur.id'), nullable=False)
-    vehicule_id = db.Column(db.Integer, db.ForeignKey('vehicule.id'), nullable=False)
-    date_debut = db.Column(db.DateTime, nullable=False)
-    date_fin = db.Column(db.DateTime, nullable=False)
-    type_reservation = db.Column(db.String(50), nullable=False)
-
-    def __repr__(self):
-        return f'Reservation {self.id}: {self.utilisateur} - {self.vehicule}'
-
-    
-class Commentaire(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    utilisateur_id = db.Column(db.Integer, db.ForeignKey('utilisateur.id'), nullable=False)
-    vehicule_id = db.Column(db.Integer, db.ForeignKey('vehicule.id'), nullable=False)
-    contenu = db.Column(db.Text, nullable=False)
-    date_creation = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f'Commentaire {self.id}: {self.utilisateur} - {self.vehicule}'
-
-class Facture(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    utilisateur_id = db.Column(db.Integer, db.ForeignKey('utilisateur.id'), nullable=False)
-    vehicule_id = db.Column(db.Integer, db.ForeignKey('vehicule.id'), nullable=False)
-    montant = db.Column(db.Float, nullable=False)
-    date_creation = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f'Facture {self.id}: {self.utilisateur} - {self.vehicule}'
-
+    full_name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    phone_number = db.Column(db.String(20), nullable=False)
+    check_in = db.Column(db.DateTime, nullable=False)
+    check_out = db.Column(db.DateTime, nullable=False)
+    num_guests = db.Column(db.Integer, nullable=False)
+    vehicle_choice = db.Column(db.String(100), nullable=False)
+    driver_choice = db.Column(db.Boolean, nullable=False)
 
 
 # -------------------------- les routes---------------------------#
@@ -93,10 +96,12 @@ class Facture(db.Model):
 def accueil():
     return render_template('Accueil.html', title='Accueil')
 
+
 # Route À propos
 @app.route('/apropos')
 def apropos():
     return render_template('Apropos.html', title='À propos')
+
 
 # Route Services
 @app.route('/services')
@@ -104,9 +109,28 @@ def services():
     return render_template('Services.html', title='Services')
 
 
-@app.route('/véhicule')
-def véhicule():
-    return render_template('véhicule.html', title='véhicule')
+# Route Véhicule
+# Route Véhicule
+# Route Véhicule
+@app.route('/vehicule', methods=['GET', 'POST'])
+def vehicule():
+    if request.method == 'POST' and 'image' in request.files:
+        image = request.files['image']
+        filename = images.save(image)
+        marque = request.form['marque']
+        modele = request.form['modele']
+        
+        vehicule = Vehicule(marque=marque, modele=modele, image=filename)
+        db.session.add(vehicule)
+        db.session.commit()
+
+    vehicules = Vehicule.query.all()
+    return render_template('vehicule.html', vehicules=vehicules)
+
+
+
+
+
 
 # Route Inscription
 @app.route('/inscription', methods=['GET', 'POST'])
@@ -115,7 +139,7 @@ def inscription():
         return redirect(url_for('services'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        encrypted_password= bcrypt.generate_password_hash(form.mot_de_passe.data).decode('utf-8')
+        encrypted_password = bcrypt.generate_password_hash(form.mot_de_passe.data).decode('utf-8')
         utilisateur = Utilisateur(Nom=form.Nom.data,
                                   prenom=form.prenom.data,
                                   Nom_utilisateur=form.Nom_utilisateur.data,
@@ -127,6 +151,8 @@ def inscription():
         return redirect(url_for('connexion'))
     return render_template('Inscription.html', title='Inscription', form=form)
 
+
+# Route Connexion
 # Route Connexion
 @app.route('/connexion', methods=['GET', 'POST'])
 def connexion():
@@ -145,6 +171,8 @@ def connexion():
 
 # Route deconnexion
 
+
+# Route Déconnexion
 @app.route('/deconnexion')
 def deconnexion():
     logout_user()
@@ -152,7 +180,6 @@ def deconnexion():
 
 
 # Route Réservation de véhicule
-
 @app.route('/reservation', methods=['GET', 'POST'])
 @login_required
 def reservation():
@@ -173,8 +200,6 @@ def reservation():
         flash('Réservation effectuée avec succès', category='success')
         return redirect(url_for('accueil'))
     return render_template('reservation.html', title='Réservation', form=form)
-
-
 
 
 # Instanciation de la base de données

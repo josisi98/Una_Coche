@@ -1,5 +1,5 @@
 .contentA{
-        background:url(../image/E.png) ;
+        background:url(../uploads/E.png) ;
         width: 100%;
         height: 76vh;
         background-position: center;
@@ -46,13 +46,13 @@
 }
 
 .top{
-    background:url(../image/ap.png) ;
+    background:url(../uploads/ap.png) ;
     width: 100%;
     height: 76vh;
     background-position: center;
 
 }.top2{
-    background:url(../image/p.jpeg);
+    background:url(../uploads/p.jpeg);
     width: 100%;
     height: 75vh;
     background-position: center;
@@ -114,82 +114,6 @@
     background-size: cover;
 }
 
-.car-1{
-    background-image: url('../image/7.png');
-    background-position: center;
-
-}
-.car-2{
-    background-image: url('../image/10.png');
-    background-position: center;
-}
-.car-3{
-    background-image: url('../image/3.png');
-    background-position: center;
-}
-.car-4{
-    background-image: url('../image/4.png');
-    background-position: center;
-}
-.car-5{
-    background-image: url('../image/9.png');
-    background-position: center;
-    /* transform: scale(0.8); */
-}
-.car-6{
-    background-image: url('../image/20.png');
-    background-position: center;
-}
-.car-7{
-    background-image: url('../image/21.png');
-    background-position: center;
-
-}
-.car-8{
-    background-image: url('../image/19.png');
-    background-position: center;
-}
-.car-9{
-    background-image: url('../image/a.jpg');
-    background-position: center;
-}
-.car-10{
-    background-image: url('../image/22.png');
-    background-position: center;
-}
-.car-11{
-    background-image: url('../image/f.png');
-    background-position: center;
-}
-.car-12{
-    background-image: url('../image/23.png');
-    background-position: center;
-}
-.car-13{
-    background-image: url('../image/30.png');
-    background-position: center;
-}
-.car-14{
-    background-image: url('../image/g.png');
-    background-position: center;
-}
-.car-15{
-    background-image: url('../image/31.png');
-    background-position: center;
-}
-
-.car-16{
-    background-image: url('../image/35.png');
-}
-.car-17{
-    background-image: url('../image/b.png');
-    background-position: center;
-}
-
-.car-18{
-    background-image: url('../image/h.png');
-    background-position: center;
-}
 
 .lien{
     background-color: #000;
