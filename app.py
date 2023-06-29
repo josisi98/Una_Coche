@@ -5,7 +5,9 @@ from flask_login import LoginManager, UserMixin, current_user, login_user, logou
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from forms import RegistrationForm, LoginForm, ReservationForm
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'lavieestainsi'
@@ -86,7 +88,32 @@ class Reservation(db.Model):
     num_guests = db.Column(db.Integer, nullable=False)
     vehicle_choice = db.Column(db.String(100), nullable=False)
     driver_choice = db.Column(db.Boolean, nullable=False)
-
+    
+    # ====================== forms ============================ #
+    
+class RegistrationForm(FlaskForm):
+    Nom=StringField(label='Nom',validators=[DataRequired(),Length(min=4,max=30)])
+    prenom=StringField(label='prenom',validators=[DataRequired(),Length(min=4,max=30)])
+    Nom_utilisateur=StringField(label='Nom_utilisateur', validators=[DataRequired(),Length(min=4,max=30)])
+    email = StringField(label='Email', validators=[DataRequired(), Email()])
+    mot_de_passe = PasswordField(label='mot de passe', validators=[DataRequired(), Length(min=8,max=20)])
+    confir_motdepasse = PasswordField(label='confirm mot de passe', validators=[DataRequired(),EqualTo('mot_de_passe')])
+    submit = SubmitField(label='Inscription')
+    
+class LoginForm(FlaskForm):
+    email = StringField(label='Email', validators=[DataRequired(), Email()])
+    mot_de_passe = PasswordField(label='mot de passe', validators=[DataRequired(), Length(min=8,max=20)])
+    submit = SubmitField(label='Connexion')
+    
+class ReservationForm(FlaskForm):
+    full_name = StringField('Nom complet', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    phone_number = StringField('Numéro de téléphone', validators=[DataRequired()])
+    check_in = StringField('Date d\'arrivée', validators=[DataRequired()])
+    check_out = StringField('Date de départ', validators=[DataRequired()])
+    num_guests = IntegerField('Nombre de clients', validators=[DataRequired()])
+    vehicle_choice = SelectField('Véhicule', choices=[('car', 'Voiture'), ('suv', 'SUV'), ('van', 'Fourgonnette')])
+    driver_choice = SelectField('Chauffeur', choices=[('yes', 'Oui'), ('no', 'Non')])
 
 # -------------------------- les routes---------------------------#
 
