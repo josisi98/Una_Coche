@@ -8,6 +8,8 @@ from flask_admin.contrib.sqla import ModelView
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+from flask_migrate import Migrate
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'lavieestainsi'
@@ -17,6 +19,7 @@ login_manager.init_app(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///UNA_COCHE.db'
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 admin = Admin(app, name='josias_dmin', template_mode='bootstrap3')
 
 
@@ -228,10 +231,6 @@ def reservation():
         return redirect(url_for('accueil'))
     return render_template('reservation.html', title='Réservation', form=form)
 
-
-# Instanciation de la base de données
-with app.app_context():
-    db.create_all()
 
 
 if __name__ == '__main__':
