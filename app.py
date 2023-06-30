@@ -9,6 +9,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_migrate import Migrate
+# from flask_uploads import UploadSet, configure_uploads, IMAGES
+# from werkzeug.utils import secure_filename
+# import os
+
 
 
 app = Flask(__name__)
@@ -21,6 +25,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///UNA_COCHE.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 admin = Admin(app, name='josias_dmin', template_mode='bootstrap3')
+app.config['UPLOAD_FOLDER'] = 'upload/vers/le/repertoire'
 
 
 # pour la session#
@@ -199,7 +204,40 @@ def connexion():
             flash(f'Échec de la connexion. Veuillez entrer les bonnes informations pour {form.email.data}', category='danger')
     return render_template('Connexion.html', title='Connexion', form=form)
 
-# Route deconnexion
+
+
+# @app.route('/upload', methods=['POST'])
+# def upload():
+#     if 'image' in request.files:
+#         image = request.files['image']
+#         if image.filename != '':
+#             filename = secure_filename(image.filename)
+#             path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#             image.save(path)
+
+#             # Enregistrer le chemin d'accès dans la base de données
+#             vehicule = Vehicule(marque='Marque', modele='Modèle', image=path)
+#             db.session.add(vehicule)
+#             db.session.commit()
+
+#     return redirect(url_for('vehicule'))
+
+# @app.route('/upload', methods=['POST'])
+# def upload():
+#     if 'image' in request.files:
+#         image = request.files['image']
+#         if image.filename != '':
+#             filename = secure_filename(image.filename)
+#             path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#             image.save(path)
+
+#             # Enregistrer le chemin d'accès dans la base de données
+#             vehicule = Vehicule(marque='Marque', modele='Modèle', image=path)
+#             db.session.add(vehicule)
+#             db.session.commit()
+
+#     return redirect(url_for('vehicule'))
+
 
 
 # Route Déconnexion

@@ -114,6 +114,82 @@
     background-size: cover;
 }
 
+.car-1{
+    background-image: url('../uploads/7.png');
+    background-position: center;
+
+}
+.car-2{
+    background-image: url('../uploads/10.png');
+    background-position: center;
+}
+.car-3{
+    background-image: url('../uploads/3.png');
+    background-position: center;
+}
+.car-4{
+    background-image: url('../uploads/4.png');
+    background-position: center;
+}
+.car-5{
+    background-image: url('../uploads/9.png');
+    background-position: center;
+    /* transform: scale(0.8); */
+}
+.car-6{
+    background-image: url('../uploads/20.png');
+    background-position: center;
+}
+.car-7{
+    background-image: url('../uploads/21.png');
+    background-position: center;
+
+}
+.car-8{
+    background-image: url('../uploads19.png');
+    background-position: center;
+}
+.car-9{
+    background-image: url('../uploads/a.jpg');
+    background-position: center;
+}
+.car-10{
+    background-image: url('../uploads/22.png');
+    background-position: center;
+}
+.car-11{
+    background-image: url('../uploads/f.png');
+    background-position: center;
+}
+.car-12{
+    background-image: url('../uploads/23.png');
+    background-position: center;
+}
+.car-13{
+    background-image: url('../uploads/30.png');
+    background-position: center;
+}
+.car-14{
+    background-image: url('../uploads/g.png');
+    background-position: center;
+}
+.car-15{
+    background-image: url('../uploads/31.png');
+    background-position: center;
+}
+
+.car-16{
+    background-image: url('../uploads/35.png');
+}
+.car-17{
+    background-image: url('../uploads/b.png');
+    background-position: center;
+}
+
+.car-18{
+    background-image: url('../uploads/h.png');
+    background-position: center;
+}
 
 .lien{
     background-color: #000;
